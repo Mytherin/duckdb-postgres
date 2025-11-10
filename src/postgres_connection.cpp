@@ -128,9 +128,13 @@ PostgresVersion PostgresConnection::GetPostgresVersion() {
 		version.type_v = PostgresInstanceType::UNKNOWN;
 		return version;
 	}
-	auto version = PostgresUtils::ExtractPostgresVersion(result->GetString(0, 0));
+	auto pg_version_string = result->GetString(0, 0);
+	auto version = PostgresUtils::ExtractPostgresVersion(pg_version_string);
 	if (result->GetInt64(0, 1) > 0) {
 		version.type_v = PostgresInstanceType::AURORA;
+	}
+	if (StringUtil::Contains(pg_version_string, "Redshift")) {
+		version.type_v = PostgresInstanceType::REDSHIFT;
 	}
 	return version;
 }

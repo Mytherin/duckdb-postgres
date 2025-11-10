@@ -130,6 +130,9 @@ void PostgresScanFunction::PrepareBind(PostgresVersion version, ClientContext &c
 	}
 	bind_data.SetTablePages(approx_num_pages);
 	bind_data.version = version;
+	if (version.type_v == PostgresInstanceType::REDSHIFT) {
+		bind_data.use_text_protocol = true;
+	}
 }
 
 PostgresBindData::PostgresBindData(ClientContext &context) {
