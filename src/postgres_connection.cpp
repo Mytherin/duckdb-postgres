@@ -40,10 +40,10 @@ PostgresConnection &PostgresConnection::operator=(PostgresConnection &&other) no
 	return *this;
 }
 
-PostgresConnection PostgresConnection::Open(const string &connection_string) {
+PostgresConnection PostgresConnection::Open(const string &dsn, const string &attach_path) {
 	PostgresConnection result;
-	result.connection = make_shared_ptr<OwnedPostgresConnection>(PostgresUtils::PGConnect(connection_string));
-	result.dsn = connection_string;
+	result.connection = make_shared_ptr<OwnedPostgresConnection>(PostgresUtils::PGConnect(dsn, attach_path));
+	result.dsn = dsn;
 	return result;
 }
 

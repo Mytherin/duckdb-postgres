@@ -54,7 +54,8 @@ PostgresPoolConnection PostgresConnectionPool::GetConnectionInternal() {
 	}
 
 	// no cached connections left but there is space to open a new one - open it
-	return PostgresPoolConnection(this, PostgresConnection::Open(postgres_catalog.connection_string));
+	return PostgresPoolConnection(
+	    this, PostgresConnection::Open(postgres_catalog.connection_string, postgres_catalog.attach_path));
 }
 
 PostgresPoolConnection PostgresConnectionPool::ForceGetConnection() {
